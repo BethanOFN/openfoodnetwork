@@ -62,6 +62,16 @@ RSpec.describe Api::EnterpriseShopfrontSerializer do
     expect(serializer.serializable_hash[:producers].to_json).to match producer.name
   end
 
+  it "links to the contact form instead of publishing the email address" do
+    hub.update!(email_address: "secret@example.com")
+    json = serializer.to_json
+
+    expect(json).not_to include "secret@example.com"
+    expect(json).not_to include "secret@example.com".reverse
+    expect(serializer.serializable_hash[:contact_message_path])
+      .to eq "/enterprises/#{hub.permalink}/contact_message/new"
+  end
+
   it "serializes taxons" do
     expect(serializer.serializable_hash[:taxons]).to be_a ActiveModel::ArraySerializer
     expect(serializer.serializable_hash[:taxons].to_json).to match 'Meat'

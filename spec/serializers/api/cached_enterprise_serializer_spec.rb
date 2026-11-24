@@ -4,6 +4,22 @@ RSpec.describe Api::CachedEnterpriseSerializer do
   let(:cached_enterprise_serializer) { described_class.new(enterprise) }
   let(:enterprise) { create(:enterprise) }
 
+  describe "contact details" do
+    it "links to the contact form instead of publishing the email address" do
+      enterprise.update!(email_address: "secret@example.com")
+
+      expect(described_class._attributes.keys).not_to include :email_address
+      expect(cached_enterprise_serializer.contact_message_path)
+        .to eq "/enterprises/#{enterprise.permalink}/contact_message/new"
+    end
+
+    it "has no contact form without an email address" do
+      enterprise.update!(email_address: "")
+
+      expect(cached_enterprise_serializer.contact_message_path).to be_nil
+    end
+  end
+
   describe '#supplied_properties' do
     let(:property) { create(:property, presentation: 'One') }
     let(:duplicate_property) { create(:property, presentation: 'One') }

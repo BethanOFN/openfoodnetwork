@@ -1,0 +1,4 @@
+-# The container the controller's turbo stream responses update.
+.enterprise-contact-form{ id: dom_id(enterprise, :contact_message) }
+  = render "enterprise_contact_messages/form", enterprise:,
+    contact_message: EnterpriseContactMessage.new, sent: false, alert: nil

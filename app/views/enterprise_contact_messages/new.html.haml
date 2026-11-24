@@ -1,0 +1,6 @@
+- content_for(:title) { t(".title", enterprise: @enterprise.name) }
+
+.row.pad-top
+  .small-12.medium-8.medium-centered.columns
+    %h3= t(".title", enterprise: @enterprise.name)
+    = render "enterprise_contact_messages/panel", enterprise: @enterprise

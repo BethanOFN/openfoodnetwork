@@ -15,7 +15,7 @@
             = current_distributor.address.address_part2
 
     .small-12.large-4.columns
-      - if current_distributor.website || current_distributor.email_address || current_distributor.phone || current_distributor.whatsapp_phone
+      - if current_distributor.website.present? || current_distributor.phone.present? || current_distributor.whatsapp_phone.present?
         .center
           .header
             = t :shopping_contact_web
@@ -32,10 +32,6 @@
               %a{href: "http://#{current_distributor.website}", target: "_blank" }
                 = current_distributor.website
                 %br
-            - if current_distributor.email_address.present?
-              %a{href: current_distributor.email_address.reverse, mailto: true}
-                %span.obfuscatedEmail.email
-                  = current_distributor.email_address.reverse
 
     .small-12.large-4.columns
       - if current_distributor.twitter.present? || current_distributor.facebook.present? || current_distributor.linkedin.present? || current_distributor.instagram.present?
@@ -62,3 +58,10 @@
               %span
                 %a{href: "http://instagram.com/#{current_distributor.instagram}", target: "_blank" }
                   %i.instagram.ofn-i_043-instagram
+
+  - if current_distributor.email_address.present?
+    .row
+      .small-12.medium-8.medium-centered.columns
+        .header.center
+          = t :shopping_contact_message
+        = render "enterprise_contact_messages/panel", enterprise: current_distributor

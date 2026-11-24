@@ -7,8 +7,8 @@ module Api
 
     attributes :name, :id, :description, :latitude, :longitude, :long_description, :website,
                :instagram, :linkedin, :twitter, :facebook, :is_primary_producer, :is_distributor,
-               :phone, :whatsapp_phone, :whatsapp_url, :visible, :email_address, :hash, :logo,
-               :promo_image, :path, :category, :active, :producers, :orders_close_at, :hubs,
+               :phone, :whatsapp_phone, :whatsapp_url, :visible, :contact_message_path, :hash,
+               :logo, :promo_image, :path, :category, :active, :producers, :orders_close_at, :hubs,
                :taxons, :supplied_taxons, :pickup, :delivery, :preferred_product_low_stock_display,
                :hide_ofn_navigation, :white_label_logo, :white_label_logo_link
 
@@ -33,8 +33,11 @@ module Api
       shipping_types? :delivery
     end
 
-    def email_address
-      enterprise.email_address.to_s.reverse
+    # The email address itself is never published, only a contact form.
+    def contact_message_path
+      return if enterprise.email_address.blank?
+
+      new_enterprise_contact_message_path(enterprise)
     end
 
     def hash

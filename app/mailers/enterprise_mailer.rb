@@ -28,6 +28,23 @@ class EnterpriseMailer < ApplicationMailer
     end
   end
 
+  # Forwards a message sent through the enterprise's public contact form.
+  # Replies go straight to the sender, so the enterprise's address stays
+  # private until the enterprise chooses to reply.
+  def contact_message(enterprise, message)
+    @enterprise = enterprise
+    @message = message.with_indifferent_access
+
+    I18n.with_locale valid_locale(@enterprise.owner) do
+      subject = t('enterprise_mailer.contact_message.subject',
+                  name: @message[:name],
+                  sitename: Spree::Config[:site_name])
+      mail(to: @enterprise.email_address,
+           subject:,
+           reply_to: @message[:email])
+    end
+  end
+
   private
 
   def find_enterprise(enterprise)

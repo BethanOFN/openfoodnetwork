@@ -473,6 +473,21 @@ en:
       join_community: "Join the community"
     invite_manager:
       subject: "%{enterprise} has invited you to be a manager"
+    contact_message:
+      subject: "New message from %{name} via %{sitename}"
+      intro: "%{name} (%{email}) sent %{enterprise} this message using the contact form on %{sitename}:"
+      reply_hint: "Reply to this email to answer %{name} directly. They won't see your email address unless you reply."
+  enterprise_contact_messages:
+    new:
+      title: "Contact %{enterprise}"
+    form:
+      name: "Your name"
+      email: "Your email"
+      message: "Message"
+      send: "Send message"
+      sent: "Thanks, your message has been sent to %{enterprise}. They'll reply to the email address you gave."
+      privacy_note: "Your name, email and message will be sent to %{enterprise} so they can reply."
+      rate_limited: "You've sent several messages recently. Please try again later."
   payment_mailer:
     authorize_payment:
       subject: "Please authorize your payment to %{distributor} on OFN"
@@ -2778,6 +2793,7 @@ en:
   shopping_contact_address: "Address"
   shopping_contact_web: "Contact"
   shopping_contact_social: "Follow"
+  shopping_contact_message: "Send a message"
   shopping_groups_part_of: "is part of:"
   shopping_producers_of_hub: "%{hub}'s producers:"
 
@@ -3195,6 +3211,7 @@ en:
   shop_variant_quantity_min: "min"
   shop_variant_quantity_max: "max"
   contact: "Contact"
+  contact_form_link: "Send a message"
   follow: "Follow"
   shop_for_products_html: "Shop for <span class=\"turquoise\">%{enterprise}</span> products at:"
   change_shop: "Change shop to:"

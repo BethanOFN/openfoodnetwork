@@ -1,0 +1,21 @@
+- if sent
+  .alert-box.success
+    = t(".sent", enterprise: enterprise.name)
+- else
+  = form_with model: contact_message, scope: :enterprise_contact_message,
+    url: enterprise_contact_message_path(enterprise), data: { turbo: true } do |form|
+    - if alert.present?
+      .alert-box.alert= alert
+    = form.label :name, t(".name")
+    = form.text_field :name, autocomplete: "name", maxlength: 100, required: true
+    = form.error_message_on :name
+    = form.label :email, t(".email")
+    = form.email_field :email, autocomplete: "email", required: true
+    = form.error_message_on :email
+    = form.label :message, t(".message")
+    = form.text_area :message, rows: 5, required: true,
+      maxlength: EnterpriseContactMessage::MESSAGE_MAX_LENGTH
+    = form.error_message_on :message
+    %p.enterprise-contact-form__note= t(".privacy_note", enterprise: enterprise.name)
+    = form.submit t(".send"), class: "button primary"
+    = form.invisible_captcha

@@ -114,6 +114,8 @@ Openfoodnetwork::Application.routes.draw do
       get :shop
       get :relatives
     end
+
+    resource :contact_message, only: [:new, :create], controller: :enterprise_contact_messages
   end
   get '/:id/shop', to: 'enterprises#shop', as: 'enterprise_shop'
   get "/enterprises/:permalink", to: redirect("/") # Legacy enterprise URL

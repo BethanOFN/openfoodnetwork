@@ -8,15 +8,17 @@ module Api
 
     cached
 
+    # Bump the version when removing attributes that must not be served from
+    # an old cache entry (v2: stopped publishing the enterprise email address).
     def cache_key
-      enterprise&.cache_key
+      "#{enterprise&.cache_key}/v2"
     end
 
     attributes :name, :id, :description, :latitude, :longitude,
                :long_description, :website, :instagram, :linkedin, :twitter,
                :facebook, :is_primary_producer, :is_distributor, :phone, :whatsapp_phone,
-               :whatsapp_url, :visible, :email_address, :hash, :logo, :promo_image, :path, :pickup,
-               :delivery, :icon, :icon_font, :producer_icon_font, :category
+               :whatsapp_url, :visible, :contact_message_path, :hash, :logo, :promo_image,
+               :path, :pickup, :delivery, :icon, :icon_font, :producer_icon_font, :category
 
     attributes :taxons, :supplied_taxons
 
@@ -35,8 +37,11 @@ module Api
       services ? services[:delivery] : false
     end
 
-    def email_address
-      enterprise.email_address.to_s.reverse
+    # The email address itself is never published, only a contact form.
+    def contact_message_path
+      return if enterprise.email_address.blank?
+
+      new_enterprise_contact_message_path(enterprise)
     end
 
     def hash
